@@ -14,6 +14,7 @@ deploy:
   provider: pages
   skip_cleanup: true
   local_dir: public # Default static site output dir for Hugo
+  target_branch: master
   github_token: $GITHUB_TOKEN # This is the authentication which you will setup in the next step in travis-ci dashboard
   on:
     branch: master
