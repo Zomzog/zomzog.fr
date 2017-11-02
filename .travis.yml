@@ -1,13 +1,12 @@
-language: go
-
-go:
-  - master # This uses automatically the latest version of go
+sudo: true
+dist: trusty
 
 install:
-  - go get github.com/spf13/hugo # This provides the latest version of Hugo to Travis CI
+  - sudo apt-get --yes install snapd
+  - sudo snap install hugo
 
 script:
-  - hugo # This commands builds your website on travis
+  - /snap/bin/hugo # This commands builds your website on travis
 
 after_success: |
   if [ "$TRAVIS_BRANCH" == "master" ]; then
