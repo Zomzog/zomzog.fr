@@ -14,7 +14,7 @@ paginate = 5
   page = "/:slug/"
 
 [[menu.sidebar]]
-  name = "Link 1"
+  name = "Side 1"
   url = "https://example.com"
 
 [[menu.sidebar]]
