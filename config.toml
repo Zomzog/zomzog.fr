@@ -27,7 +27,7 @@ paginate = 5
 #[[menu.navbar]]
 #  name = "Link 1"
 #  url = "https://example.org"
-
+ 
 
 # Theme variables
 #
@@ -90,6 +90,7 @@ paginate = 5
     # for example: nytimes, flickr, NatGeo, etc).
     # See: https://dev.twitter.com/cards/types/summary-large-image
     twitter = "Zomzog"
+    github = "Zomzog"
 
 # Default content language for Hugo 0.17's multilingual support (default is "en")
 # See: https://github.com/spf13/hugo/blob/master/docs/content/content/multilingual.md
