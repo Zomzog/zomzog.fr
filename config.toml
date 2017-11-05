@@ -27,7 +27,7 @@ paginate = 5
 #[[menu.navbar]]
 #  name = "Link 1"
 #  url = "https://example.org"
-
+ 
 
 # Theme variables
 #
@@ -89,7 +89,9 @@ paginate = 5
     # Optional, used for attribution in Twitter cards (ideally not a person
     # for example: nytimes, flickr, NatGeo, etc).
     # See: https://dev.twitter.com/cards/types/summary-large-image
-    twitter = "Zomzog"
+    github = "Zomzog"
+    linkedin = "thibault-duperron-76446435"
+    email = "zomzog@zomzog.fr"
 
 # Default content language for Hugo 0.17's multilingual support (default is "en")
 # See: https://github.com/spf13/hugo/blob/master/docs/content/content/multilingual.md
