@@ -1,11 +1,7 @@
 {
   "name": "hugo-theme",
   "version": "0.0.1",
-  "description": "A Bootstrap v4 theme for the Hugo static site generator.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alanorth/hugo-theme-bootstrap4-blog.git"
-  },
+  "description": "Theme hugo generator for zomzog.fr.",
   "scripts": {
     "build:css": "node-sass --output-style expanded --precision 6 source/scss/style.scss static/css/style.css.tmp && cleancss --level 1 static/css/style.css.tmp -o static/css/style.css",
     "build:fonts": "cp node_modules/font-awesome/fonts/* static/fonts",
@@ -15,7 +11,7 @@
     "clean": "rm static/css/style.css.tmp"
   },
   "keywords": "hugo",
-  "author": "Alan Orth",
+  "author": "Zomzog",
   "license": "GPL-3.0",
   "devDependencies": {
     "bootstrap": "4.0.0-beta.2",
