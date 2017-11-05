@@ -5,7 +5,7 @@ theme = "hugo-theme"
 # number of posts to show on home/category/tag pages (Default: 10)
 paginate = 5
 # optionally override the site's footer with custom copyright text
-# copyright = "Except where otherwise noted, content on this site is licensed under a [Creative Commons Attribution 4.0 International license](https://creativecommons.org/licenses/by-sa/4.0/)."
+copyright = " All code and content for this blog is available as [open source on GitHub](https://github.com/zomzog/zomzog.fr)."
 #googleAnalytics = "UA-123-45"
 #disqusShortname = "XYW"
 
@@ -80,7 +80,7 @@ paginate = 5
 
   [params.sidebar]
     # Optional about block for sidebar (can be Markdown)
-    about = "Zomzog développeur full-pony"
+    about = "Hi, I'm Zomzog a full-stack developer adepte of PDD (Pony Driven Development)."
 
     # How many posts to show on the sidebar (Default: 5)
     #num_recent_posts = 2
