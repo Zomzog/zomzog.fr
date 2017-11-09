@@ -3,6 +3,7 @@ dist: trusty
 
 install:
   - gem install asciidoctor
+  - asciidoctor -v
   - sudo apt-get --yes install snapd
   - sudo snap install hugo
 
