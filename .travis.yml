@@ -2,6 +2,7 @@ sudo: true
 dist: trusty
 
 install:
+  - sudo apt-get --yes install asciidoctor
   - sudo apt-get --yes install snapd
   - sudo snap install hugo
 
