@@ -1,12 +1,17 @@
-sudo: true
-dist: trusty
+language: go
 
+env:
+  global:
+    - PATH="$TRAVIS_BUILD_DIR/go/bin:$PATH"
+    
 install:
-  - sudo apt-get --yes install snapd
-  - sudo snap install hugo
+  - gem install asciidoctor       
+  - go get -v github.com/kardianos/govendor
+  - govendor get -v github.com/spf13/hugo
 
 script:
-  - /snap/bin/hugo # This commands builds your website on travis
+  - hugo version
+  - hugo -v
 
 after_success: |
   if [ "$TRAVIS_BRANCH" == "master" ]; then
