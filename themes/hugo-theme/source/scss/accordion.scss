@@ -1,0 +1,12 @@
+.accordion { 
+    a {
+        &.collapsed {
+            .fa {
+                transform: rotate(-90deg);
+            }
+        }
+        .fa {
+            transition: 200ms ease;
+        }
+    }
+}
