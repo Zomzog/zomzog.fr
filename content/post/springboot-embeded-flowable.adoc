@@ -4,79 +4,268 @@ date: 2017-11-01T21:49:21+01:00
 draft: false
 ---
 
-Overview
---------
+= TOC
+:toc:
+:toc-placement: preamble
+:toclevels: 1
+:Some attr: Some value
+
+// Need some preamble to get TOC:
+{empty}
+
+
+== Overview
+
 In this tutorial we'll see how to initiate a springboot project with flowable.<!--more-->
 We will build an API to make a pony says "hello <name>" or "Eeyup" if the pony is Big McIntosh
 
 The full implementation of this tutorial can be found in 
 https://github.com/Zomzog/embedded-flowable[the github project].
 
-Maven Configuration
--------------------
+== Dependencies
+
 We will need :
 
 * for springboot : web, data-jpa, test
 * for flowable : flowable-spring-boot-starter-basic
 * for database : h2
 
-[.accordion]
-{{< highlight xml "linenos=table,hl_lines=8 15-17" >}}
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.8.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-
-	<properties>
-		<java.version>1.8</java.version>
-		<flowable.version>6.2.0</flowable.version>
-	</properties>
-    
-	<dependencies>
-        <!-- Springboot -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <!-- Flowabe -->
-        <dependency>
-            <groupId>org.flowable</groupId>
-            <artifactId>flowable-spring-boot-starter-basic</artifactId>
-            <version>${flowable.version}</version>
-        </dependency>
-        
-        <!-- Database -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- Test -->
-		<dependency>
+{{< accordion title="Maven configuration" >}}
+	{{< highlight xml "linenos=table" >}}
+		<parent>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-    
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-{{< / highlight >}}
-----
+			<artifactId>spring-boot-starter-parent</artifactId>
+			<version>1.5.8.RELEASE</version>
+			<relativePath/> <!-- lookup parent from repository -->
+		</parent>
 
-Domain model
-------------
+		<properties>
+			<java.version>1.8</java.version>
+			<flowable.version>6.2.0</flowable.version>
+		</properties>
+		
+		<dependencies>
+			<!-- Springboot -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-jpa</artifactId>
+			</dependency>
+
+			<!-- Flowabe -->
+			<dependency>
+				<groupId>org.flowable</groupId>
+				<artifactId>flowable-spring-boot-starter-basic</artifactId>
+				<version>${flowable.version}</version>
+			</dependency>
+			
+			<!-- Database -->
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<scope>runtime</scope>
+			</dependency>
+
+			<!-- Test -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+		
+		<build>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+				</plugin>
+			</plugins>
+		</build>
+	{{< / highlight >}}
+{{< / accordion >}}
+
+
+== Goals
+
+We want to resolve those two tests :
+
+{{< highlight java "linenos=table" >}}
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class PonyControllerTest {
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+        final PonyController ponyController = new PonyController(runtimeService, historyService);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(ponyController)
+                .build();
+    }
+
+    @Test
+    public void sayHello() throws Exception {
+        // Init
+        Pony pony = new Pony("Daring Do");
+        pony = ponyRepository.save(pony);
+        // Do
+        this.mockMvc.perform(post("/ponies/{ponyId}/sayHello", pony.getId()))
+                // Validate
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Hello Daring Do"));
+        // Teardown
+        ponyRepository.delete(pony.getId());
+    }
+
+    @Test
+    public void sayEeyup() throws Exception {
+        // Init
+        Pony pony = new Pony("Big McIntosh");
+        pony = ponyRepository.save(pony);
+        // Do
+        this.mockMvc.perform(post("/ponies/{ponyId}/sayHello", pony.getId()))
+                // Validate
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Eeyup"));
+        // Teardown
+        ponyRepository.delete(pony.getId());
+    }
+}
+{{< / highlight >}}
+
+== Domain model
+
+We will create all required class for our domain.
+All objects used on a workflow must implements Serializable. 
+We will use two models, an entity Pony with an id and a name and an object message with is content.
+
+Pony.java
+{{< highlight java "linenos=table" >}}
+@Entity
+public class Pony implements Serializable  {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@NotNull
+	private String name;
+
+	public Pony(String name){
+        this.name = name;
+    }
+}
+{{< / highlight >}}
+
+Message.java
+{{< highlight java "linenos=table" >}}
+public class Message implements Serializable {
+	private String message;
+}
+{{< / highlight >}}
+
+PonyRepository.java
+{{< highlight java "linenos=table" >}}
+public interface PonyRepository extends JpaRepository<Pony, Long> { }
+{{< / highlight >}}
+
+
+== Services
+
+We will need three method on PonyService : 
+
+* One to getting a pony
+* One to make the pony say "Eeyup"
+* One to make the pony say "Hello {{ponyName}}"
+
+{{< highlight java "linenos=table" >}}
+@Service
+@Transactional
+public class PonyService {
+    private PonyRepository ponyRepository;
+
+    public PonyService(final PonyRepository ponyRepository) {
+        this.ponyRepository = ponyRepository;
+    }
+
+    public Pony getOne(long id) throws FunctionalException {
+        return ponyRepository.findOne(id);
+    }
+
+    public Message sayEeyup(){
+        return new Message("Eeyup");
+    }
+
+    public Message sayHello(Pony pony){
+        return new Message("Hello " + pony.getName());
+    }
+}
+{{< / highlight >}}
+
+== Workflow
+
+Now we will build the workflow. 
+It will be pretty simple we will have :
+
+* a *StartEvent* as entry point of the workflow
+* a *ServiceTask* for getting the pony by calling PonyService#getOne
+* an *ExclusiveGateway* which will lead to : 
+** if the pony is Big McIntosh a *ServiceTask* which will call PonyService#sayEeyup
+** or else a *ServiceTask* which will call PonyService#sayHello
+* an *EndEvent* to terminate the workflow
+
+=== StartEvent
+
+The StartEvent also called "None Start Event" is a default start event. It will be used when we will start the workflow through the API.
+
+=== ServiceTask
+
+ServiceTask have three way to call a java :
+
+* Java class where one JavaDelegate = 1 function
+* Expression where we can call beans
+* Delegate expression when we need to do for exemple field injection
+
+In our case we will use expression. 
+With Expression we will be able to call a bean method with ${myBean.method(variable)}
+
+We will use resultVariableName to store the return of the method to a workflow variable.
+
+=== ExclusiveGateway
+
+An ExclusiveGateway will work like a switch with break on each case. 
+Sequence flow condition will be evaluates one by one and the first one with an evaluation to true will be used. 
+If no condition is resolved as true, it will folow the default flow (which must have no conditition).
+
+=== EndEvent
+
+An EndEvent (also called None End Event) will terminate the workflow as success. 
+The execution of the workflow will be stoped.
+
+=== BPMN file
+
+The .bpmn open on text editor will look like :
+
+{{< highlight xml "linenos=table" >}}
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.zomzog.fr/blog" id="m1511380610321" name="">
+  <process id="sayHello" name="Say hello process" isExecutable="true" isClosed="false" processType="None">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <serviceTask id="getPonyDetails" name="Get pony details" activiti:expression="${ponyService.getOne(ponyId)}" activiti:resultVariableName="pony"></serviceTask>
+    <serviceTask id="sayEeyup" name="Say Eeyup" activiti:expression="${ponyService.sayEeyup()}" activiti:resultVariableName="result"></serviceTask>
+    <serviceTask id="sayHello" name="Say Hello" activiti:expression="${ponyService.sayHello(pony)}" activiti:resultVariableName="result"></serviceTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="getPonyDetails"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway" default="flow4"></exclusiveGateway>
+    <sequenceFlow id="flow2" sourceRef="getPonyDetails" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flow3" name="Big McIntosh" sourceRef="exclusivegateway1" targetRef="sayEeyup">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${pony.name == 'Big McIntosh'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow4" name="Default" sourceRef="exclusivegateway1" targetRef="sayHello"></sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="sayEeyup" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="sayHello" targetRef="endevent1"></sequenceFlow>
+  </process>
+</definitions>
+{{< / highlight >}}

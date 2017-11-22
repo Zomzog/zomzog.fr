@@ -1,0 +1,12 @@
+<div class="accordion">
+    <h5>
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed">
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+            {{ .Get "title" }}
+        </a>
+    </h3>
+
+    <div id="collapseOne" class="collapse">
+        {{ .Inner }}
+    </div>
+</div>

@@ -9,6 +9,15 @@
     {{ end }}
 
     <link rel="canonical" href="{{ .Permalink }}">
+    {{ if .Site.Params.cleanjs }}
+      <script src="{{ "js/jquery.js" | absURL }}"></script>
+      <script src="{{ "js/popper.js" | absURL }}"></script>
+      <script src="{{ "js/bootstrap.js" | absURL }}"></script>
+    {{ else }}
+      <script src="{{ "js/jquery.min.js" | absURL }}"></script>
+      <script src="{{ "js/popper.min.js" | absURL }}"></script>
+      <script src="{{ "js/bootstrap.min.js" | absURL }}"></script>
+    {{ end }}
 
     <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
 
