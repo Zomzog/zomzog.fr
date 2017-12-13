@@ -1,12 +1,15 @@
-<aside class="col-sm-3 ml-auto blog-sidebar">
+<aside class="ml-auto blog-sidebar">
   {{ if and (.Site.Params.sidebar) (isset .Site.Params.sidebar "about") }}
-  <section class="sidebar-module sidebar-module-inset">
-    <div id="profile">
+  <section class="sidebar-module sidebar-module-inset row">
+    <div id="profile" class="col-4 col-lg-12">
       <div class="portrait" style="background-image: url('https://s.gravatar.com/avatar/{{ md5 $.Site.Params.email }}?s=200');"></div>
       <meta itemprop="image" content="https://s.gravatar.com/avatar/{{ md5 $.Site.Params.email }}?s=200">
     </div>
-    <p>{{ .Site.Params.sidebar.about | markdownify }}</p>
-    {{ partial "social.html" . }}
+    <div class="col-8 col-lg-12">
+      <p>{{ .Site.Params.sidebar.about | markdownify }}</p>
+      <p>{{ partial "social.html" . }}</p>
+    </div>
+    
   </section>
   {{ end }}
 

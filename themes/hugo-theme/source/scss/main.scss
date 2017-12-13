@@ -130,6 +130,14 @@ h6 {
 .sidebar-module-inset ul:last-child {
   margin-bottom: 0;
 }
+.blog-sidebar {
+  section {
+    margin-top: 1rem;
+  }
+  section:first-child {
+    margin-top: 0rem;
+  }
+}
 
 /* Pagination */
 .blog-pagination {
@@ -190,6 +198,7 @@ article div.highlight {
  */
 
 .blog-footer {
+  margin-top: 1rem;
   padding: 2.5rem 0;
   color: #999;
   text-align: center;
@@ -217,6 +226,7 @@ article div.highlight {
 
 #social {
   list-style-type: none;
+  text-align: center;
 
   li {
     display: inline-block;

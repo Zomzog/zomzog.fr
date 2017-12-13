@@ -10941,6 +10941,14 @@ h6 a:hover {
   margin-bottom: 0;
 }
 
+.blog-sidebar section {
+  margin-top: 1rem;
+}
+
+.blog-sidebar section:first-child {
+  margin-top: 0rem;
+}
+
 /* Pagination */
 .blog-pagination {
   margin-bottom: 4rem;
@@ -10996,6 +11004,7 @@ article div.highlight {
  * Footer
  */
 .blog-footer {
+  margin-top: 1rem;
   padding: 2.5rem 0;
   color: #999;
   text-align: center;
@@ -11023,6 +11032,7 @@ article div.highlight {
 
 #social {
   list-style-type: none;
+  text-align: center;
 }
 
 #social li {
