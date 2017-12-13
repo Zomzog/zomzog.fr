@@ -1,12 +1,10 @@
 <section class="timeline">
-    <span class="timeline-older">
-        {{- with .Next -}}
-        <a href="{{ .Permalink }}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> {{ .Title }}</a>
-        {{- end -}}
-    </span>
-    <span class="float-right timeline-newer">
-        {{- with .Prev -}}
-        <a href="{{ .Permalink }}">{{ .Title }} <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-        {{- end -}}
-    </span>
+    {{- with .Next -}}
+    <a href="{{ .Permalink }}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> {{ .Title }}</a>
+    {{- end -}}
+    <div></div>
+    {{- with .Prev -}}
+    <a class="float-right" href="{{ .Permalink }}">{{ .Title }} <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+    {{- end -}}
+    <br>
 </section>

@@ -1,6 +1,6 @@
 baseURL = "http://zomzog.fr/"
 languageCode = "fr-fr"
-title = "My Little Page"
+title = "Zomzog's blog"
 theme = "hugo-theme"
 # number of posts to show on home/category/tag pages (Default: 10)
 paginate = 5
@@ -33,7 +33,7 @@ copyright = " All code and content for this blog is available as [open source on
 #
 [params]
   # Site author
-  author = "Zomzog"
+  author = "Thibault Duperron"
 
   # Description/subtitle for homepage (can be Markdown)
   description = ""
@@ -83,7 +83,7 @@ copyright = " All code and content for this blog is available as [open source on
 
   [params.sidebar]
     # Optional about block for sidebar (can be Markdown)
-    about = "Hi, I'm Zomzog a full-stack developer, evangelist of PDD (Pony Driven Development)."
+    about = "Hi, I'm Thibault Duperron a simple developer, evangelist of the Pony Driven Development."
 
     # How many posts to show on the sidebar (Default: 5)
     #num_recent_posts = 2
