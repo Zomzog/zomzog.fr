@@ -7,7 +7,7 @@ paginate = 5
 # optionally override the site's footer with  copyright text
 copyright = " All code and content for this blog is available as [open source on GitHub](https://github.com/zomzog/zomzog.fr)."
 #googleAnalytics = "UA-123-45"
-#disqusShortname = "XYW"
+disqusShortname = "zomzog"
 
 [permalinks]
   post = "/:year/:month/:title/"
