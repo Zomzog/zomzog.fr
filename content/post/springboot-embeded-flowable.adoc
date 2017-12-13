@@ -4,21 +4,11 @@ date: 2017-11-01T21:49:21+01:00
 draft: false
 ---
 
-= TOC
-:toc:
-:toc-placement: preamble
-:toclevels: 1
-:Some attr: Some value
+In this tutorial we'll see how to initiate a springboot project with flowable.
 
-// Need some preamble to get TOC:
-{empty}
-
-
-== Overview
-
-In this tutorial we'll see how to initiate a springboot project with flowable.<!--more-->
 We will build an API to make a pony says "hello <name>" or "Eeyup" if the pony is Big McIntosh
 
+<!--more-->
 The full implementation of this tutorial can be found in 
 https://github.com/Zomzog/embedded-flowable[the github project].
 
@@ -268,4 +258,35 @@ The .bpmn open on text editor will look like :
     <sequenceFlow id="flow6" sourceRef="sayHello" targetRef="endevent1"></sequenceFlow>
   </process>
 </definitions>
+{{< / highlight >}}
+
+All bpmn files on src/main/resources/processes are automaticaly deployed on server startup.
+
+== Rest
+
+We now need rest endpoints for start the process. 
+We need to create the map of variables which will be used by the process.
+We will start the process by using the flowable runtimeService.
+And at the end we will use the historyService to access to the ended process variables.
+
+{{< highlight java "linenos=table" >}}
+@RestController
+@RequestMapping("/ponies")
+public class PonyController {
+
+    private RuntimeService runtimeService;
+    private HistoryService historyService;
+
+    @PostMapping("/{ponyId}/sayHello")
+    public ResponseEntity<Message> sayHello(@PathVariable("ponyId") Long ponyId) {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("ponyId", ponyId);
+        final ProcessInstance process = runtimeService.startProcessInstanceByKey("sayHello", variables);
+        final HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery()
+                .processInstanceId(process.getId())
+                .variableName("result").singleResult();
+        Message message = (Message) hvi.getValue();
+        return ResponseEntity.ok(message);
+    }
+}
 {{< / highlight >}}
