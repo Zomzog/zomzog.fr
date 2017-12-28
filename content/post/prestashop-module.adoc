@@ -1,0 +1,77 @@
+---
+title: "Prestashop 1.7 module"
+date: 2017-12-05T08:35:41+01:00
+draft: true
+---
+
+I've installed a Prestashop store because... it's free and open source. 
+I need some modules like EU cookie banner and I don't want to pay 30+€ just for that.
+
+I look at the community solution but I don't found a solution that transcended me...
+And in fact, it's a good "hello world" example for me to learn how to create modules for Prestashop.
+
+<!--more-->
+The full implementation of the module can be found in 
+https://github.com/Zomzog/z_cookiesalert[this github project].
+
+== Environment
+
+For this tutorial I use a fresh installed Prestashop 1.7.2.1 and PHP 7.1.1.
+
+I use symbolic link to add my git source folder to prestashopFolder/modules/z_cookiesalert
+
+== Initialization
+
+For Initialize the module files, you can folow the 
+http://developers.prestashop.com/module/05-CreatingAPrestaShop17Module/index.html[prestashop documentation].
+
+But it's full of naming convention and specific folder organisation.
+Your module folder must be lowercase (z_cookiesalert). 
+The first php file name must be lowercase too (z_cookiesalert.php).
+The class name in this file must be camlCase (class Z_Cookiesalert extends Module).
+And don't forget everytime you add a folder, you must add an index.php file. 
+
+An easiest way I found on community forum is to start form an existing module (get an official one from prestashop's github) and modify the names.
+
+An other tips is to target 1.7+ compatibility and forget 1.6 and 1.5. 
+There are too much difference between well organized module for 1.7 and for preview versions.
+
+== The module
+
+The z_cookiesalert.php content must start by 
+
+{{< highlight php "linenos=table" >}}
+if (!defined('_PS_VERSION_')) {
+    exit;
+}
+{{< / highlight >}}
+The sole purpose of this is to prevent malicious visitors to load this file directly.
+
+After that we need to create the main class with module descritpion.
+All information on the __construct method will be used by prestashop to generate the config.xml file.
+
+{{< highlight php "linenos=table,startinline=true" >}}
+class Z_Cookiesalert extends Module
+{
+    public function __construct()
+    {
+        $this->name = 'z_cookiesalert';
+        $this->tab = 'front_office_features';
+        $this->version = '0.1.0';
+        $this->author = 'Zomzog';
+        $this->need_instance = 0;
+        $this->ps_versions_compliancy = array('min' => '1.7', 'max' => _PS_VERSION_);
+        $this->bootstrap = true;
+
+        parent::__construct();
+
+        $this->displayName = $this->l('Cookies Alert');
+        $this->description = $this->l('Cookies alert for users.');
+
+        $this->confirmUninstall = $this->l('Are you sure you want to uninstall? :(');
+
+        if (!Configuration::get('Z_COOKIES_ALERT_NAME'))
+            $this->warning = $this->l('No name provided');
+    }
+}
+{{< / highlight >}}
