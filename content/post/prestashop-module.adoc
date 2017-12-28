@@ -1,7 +1,7 @@
 ---
 title: "Prestashop 1.7 module"
 date: 2017-12-05T08:35:41+01:00
-draft: true
+draft: false
 ---
 
 I've installed a Prestashop store because... it's free and open source. 
@@ -50,7 +50,7 @@ The sole purpose of this is to prevent malicious visitors to load this file dire
 After that we need to create the main class with module descritpion.
 All information on the __construct method will be used by prestashop to generate the config.xml file.
 
-{{< highlight php "linenos=table,startinline=true" >}}
+{{< highlight php "linenos=table" >}}
 class Z_Cookiesalert extends Module
 {
     public function __construct()
@@ -75,3 +75,165 @@ class Z_Cookiesalert extends Module
     }
 }
 {{< / highlight >}}
+
+== The front office
+
+For displaing the ribbon message we will add a hook to the "displayFooter" hook.
+And we will add all css and js required on the "header" hook.
+At installation we will also declare a default content message for the ribbon.
+
+{{< highlight php "linenos=table" >}}
+public function install()
+{
+    return parent::install() &&
+        $this->registerHook('displayFooter') &&
+        $this->registerHook('header') &&
+        Configuration::updateValue('Z_COOKIES_ALERT_MESSAGE', 'En poursuivant votre navigation, vous acceptez l\'utilisation des cookies pour disposer de services et d\'offres adaptés à vos centres d\'intérêt.');
+}
+{{< / highlight >}}
+
+For getting the hooked content, prestashop will look at the method named hookNameOfTheHook.
+In our case it will be hookDisplayFooter and hookDisplayHeader.
+
+We will register the module's stylesheet and the module's javascript file on the header with :
+{{< highlight php "linenos=table" >}}
+public function hookDisplayHeader()
+{
+    $this->context->controller->registerStylesheet('modules-z_cookiesalert', 'modules/' . $this->name . '/views/css/z_cookiesalert.css', ['media' => 'all', 'priority' => 150]);
+    $this->context->controller->registerJavascript('modules-z_cookiesalert', 'modules/' . $this->name . '/views/js/z_cookiesalert.js', ['position' => 'bottom', 'priority' => 150]);
+}
+{{< / highlight >}}
+
+For the footer, if the cookie usage have not been accepted yet ( check on the cookie =D ),
+we will add two parameter to smarty and display the cookiealert template.
+
+== The back office
+
+The content of the ribbon must be customizable by the end user. 
+For this we must declare a new displayConfigForm method.
+For having an uniform render, 
+Prestashop advice to use HelperForm. 
+
+For this we will create a $fields_form with all required fields and use the helper to configure the render.
+
+{{< highlight php "linenos=table" >}}
+public function displayConfigForm()
+{
+    // Get default language
+    $default_lang = (int)Configuration::get('PS_LANG_DEFAULT');
+
+    // Init Fields form array
+    $fields_form = array(
+        'form' => array(
+            'legend' => array(
+                'title' => $this->l('Settings'),
+            ),
+            'input' => array(
+                array(
+                    'type' => 'text',
+                    'label' => $this->l('Message'),
+                    'name' => 'Z_COOKIES_ALERT_MESSAGE',
+                    'size' => 128,
+                    'required' => true
+                )
+            ),
+            'submit' => array(
+                'title' => $this->l('Save'),
+                'class' => 'btn btn-default pull-right'
+            )
+        )
+    );
+
+    $helper = new HelperForm();
+
+    // Module, token and currentIndex
+    $helper->module = $this;
+    $helper->name_controller = $this->name;
+    $helper->token = Tools::getAdminTokenLite('AdminModules');
+    $helper->currentIndex = AdminController::$currentIndex . '&configure=' . $this->name;
+
+    // Language
+    $helper->default_form_language = $default_lang;
+    $helper->allow_employee_form_lang = $default_lang;
+
+    // Title and toolbar
+    $helper->title = $this->displayName;
+    $helper->show_toolbar = true;        // false -> remove toolbar
+    $helper->toolbar_scroll = true;      // yes - > Toolbar is always visible on the top of the screen.
+    $helper->submit_action = 'submit' . $this->name;
+    $helper->toolbar_btn = array(
+        'save' =>
+            array(
+                'desc' => $this->l('Save'),
+                'href' => AdminController::$currentIndex . '&configure=' . $this->name . '&save' . $this->name .
+                    '&token=' . Tools::getAdminTokenLite('AdminModules'),
+            ),
+        'back' => array(
+            'href' => AdminController::$currentIndex . '&token=' . Tools::getAdminTokenLite('AdminModules'),
+            'desc' => $this->l('Back to list')
+        )
+    );
+
+    // Load current value
+    $helper->fields_value['Z_COOKIES_ALERT_MESSAGE'] = Configuration::get('Z_COOKIES_ALERT_MESSAGE');
+
+    return $helper->generateForm(array($fields_form));
+}
+{{< / highlight >}}
+
+== The ajax call
+When the user close the ribbon we want to create an ajax call to update the cookie on the server side.
+For this, we must create a front controller.
+We will add a cookies.php file on z_cookiealert/controllers/front/.
+This file will declare a ModuleFrontController.
+The naming convention will force the name to Z_CookiesalertCookiesModuleFrontController class.
+
+When the class will be called, it will set the cookiealert to accepted and response true.
+
+{{< highlight php "linenos=table" >}}
+require_once _PS_MODULE_DIR_.'z_cookiesalert/z_cookiesalert.php';
+
+class Z_CookiesalertCookiesModuleFrontController extends ModuleFrontController {
+
+    public function initContent()
+    {
+        $module = new Z_Cookiesalert;
+
+        if (Tools::isSubmit('action')) {
+            $context = Context::getContext();
+            $cookie = $context->cookie;
+
+            $cookie->__set('zcookiealert', "accepted");
+
+            $response = array('status' => true, "message" => $module->l('Done.'));
+        }
+       die(Tools::jsonEncode($response));
+    }
+}
+{{< / highlight >}}
+
+For calling the controller, we must resolve the url to the controller.
+The easiest way to do that is to use _url_ method on the template.
+For this we will add a data-url attribute to cookie_alert div.
+{{< highlight html "linenos=table" >}}
+<div id="cookies_alert" data-url="{url entity='module' name='z_cookiesalert' controller='Cookies' params = [action => 'action_name']}"
+{{< / highlight >}}
+This information will be resolve at display.
+And we will be able to add a javascript click handler with jquery like :
+
+
+{{< highlight js "linenos=table" >}}
+$(document).ready(function() {
+    var cookieContent = $('.cookies_alert');
+
+    $('.accept-cookie').click(function () {
+        $.getJSON($('div.cookies_alert').data('url'), {}, function(data) {
+            if(typeof data.status !== "undefined") {
+                // Do something
+            }
+        });
+        cookieContent.hide(500);
+    });
+});
+{{< / highlight >}}
+
