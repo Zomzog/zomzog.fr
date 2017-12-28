@@ -10,7 +10,7 @@ We will build an API to make a pony says "hello <name>" or "Eeyup" if the pony i
 
 <!--more-->
 The full implementation of this tutorial can be found in 
-https://github.com/Zomzog/embedded-flowable[the github project].
+https://github.com/Zomzog/embedded-flowable[this github project].
 
 == Dependencies
 
