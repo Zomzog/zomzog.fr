@@ -76,9 +76,13 @@
           {{ end }}
 
         </div> {{ "<!-- /.blog-main -->" | safeHTML }}
+        
+        {{ block "sidebar" . }}
         <div class="col-12 col-lg-3">
           {{ partial "sidebar.html" . }}
         </div>
+        {{ end }}
+        {{ "<!-- /.sidebar -->" | safeHTML }}
 
       </div> {{ "<!-- /.row -->" | safeHTML }}
     </div> {{ "<!-- /.container -->" | safeHTML }}
