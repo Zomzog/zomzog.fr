@@ -2,6 +2,7 @@
 title: "Springboot embeded flowable"
 date: 2017-11-01T21:49:21+01:00
 draft: false
+tags: ["Java", "BPM", "Flowabe", "SpringBoot"]
 ---
 
 In this tutorial we'll see how to initiate a springboot project with flowable.
