@@ -1,9 +1,9 @@
 <section class="timeline">
-    {{- with .Next -}}
+    {{- with .NextInSection -}}
     <a href="{{ .Permalink }}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> {{ .Title }}</a>
     {{- end -}}
     <div></div>
-    {{- with .Prev -}}
+    {{- with .PrevInSection -}}
     <a class="float-right" href="{{ .Permalink }}">{{ .Title }} <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
     {{- end -}}
     <br>
