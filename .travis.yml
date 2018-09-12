@@ -1,13 +1,19 @@
-language: go
+language: python
 
-env:
-  global:
-    - PATH="$TRAVIS_BUILD_DIR/go/bin:$PATH"
-    
+python:
+    - "3.6"
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get -yq install apt-transport-https
+
+# install - install any dependencies required
 install:
-  - gem install asciidoctor       
-  - go get -v github.com/kardianos/govendor
-  - govendor get -v github.com/spf13/hugo
+    - gem install asciidoctor
+    # install latest release version
+    - wget -qO- https://api.github.com/repos/gohugoio/hugo/releases/latest | sed -r -n '/browser_download_url/{/Linux-64bit.deb/{s@[^:]*:[[:space:]]*"([^"]*)".*@\1@g;p;q}}' | xargs wget
+    - sudo dpkg -i hugo*.deb
+    - rm -rf public 2> /dev/null
 
 script:
   - hugo version

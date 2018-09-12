@@ -1,4 +1,4 @@
-image:https://travis-ci.org/Zomzog/zomzog.fr.svg?branch=master["Build Status", link="https://travis-ci.org/Zomzog/zomzog.fr"]
+[![Build Status](https://travis-ci.org/Zomzog/zomzog.fr.svg?branch=master)](https://travis-ci.org/Zomzog/zomzog.fr)
 
 Zomzog.fr
 ==========
