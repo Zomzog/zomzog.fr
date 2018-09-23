@@ -5,6 +5,11 @@ Zomzog.fr
 
 This is sources for [zomzog.fr](http://zomzog.fr/).
 
+# Requirement
+
+1. snap install hugo --channel=extended
+2. gem install asciidoctor
+
 # Using
 
 1. First, [install Hugo](https://gohugo.io/overview/installing/);
