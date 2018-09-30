@@ -1,4 +1,4 @@
-baseURL: "http://zomzog.fr/"
+baseURL: "https://zomzog.fr/"
 languageCode: "fr-fr"
 title: "Zomzog's blog"
 theme: "hugo-theme"

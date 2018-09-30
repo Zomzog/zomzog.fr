@@ -3,7 +3,7 @@
 Zomzog.fr
 ==========
 
-This is sources for [zomzog.fr](http://zomzog.fr/).
+This is sources for [zomzog.fr](https://zomzog.fr/).
 
 # Requirement
 
