@@ -1,14 +1,9 @@
-[![Build Status](https://travis-ci.org/Zomzog/zomzog.fr.svg?branch=master)](https://travis-ci.org/Zomzog/zomzog.fr)
+image:https://travis-ci.org/Zomzog/zomzog.fr.svg?branch=master["Build Status", link="https://travis-ci.org/Zomzog/zomzog.fr"]
 
 Zomzog.fr
 ==========
 
-This is sources for [zomzog.fr](https://zomzog.fr/).
-
-# Requirement
-
-1. snap install hugo --channel=extended
-2. gem install asciidoctor
+This is sources for [zomzog.fr](http://zomzog.fr/).
 
 # Using
 

@@ -1,0 +1,12 @@
+    <footer class="blog-footer">
+      <p>
+      {{ if .Site.Copyright }}
+      {{ .Site.Copyright | markdownify }}
+      {{ else }}
+      Ponyright Zomzog
+      {{ end }}
+      </p>
+      <p>
+      <a href="#">{{ i18n "backToTop" }}</a>
+      </p>
+    </footer>
