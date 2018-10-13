@@ -1,7 +1,7 @@
 baseURL: "https://zomzog.fr/"
 languageCode: "fr-fr"
 title: "Zomzog's blog"
-theme: "hugo-theme"
+theme: "zomzog.fr-theme"
 # number of posts to show on home/category/tag pages (Default: 10)
 paginate: 5
 # optionally override the site's footer with  copyright text
