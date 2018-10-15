@@ -5,7 +5,7 @@ draft: false
 tags: ["Java", "BPM", "Flowabe", "SpringBoot"]
 ---
 
-In this tutorial we'll see how to initiate a springboot project with flowable.
+In this tutorial, we'll see how to initiate a springboot project with flowable.
 
 We will build an API to make a pony says "hello <name>" or "Eeyup" if the pony is Big McIntosh
 
@@ -129,7 +129,7 @@ public class PonyControllerTest {
 == Domain model
 
 We will create all required class for our domain.
-All objects used on a workflow must implements Serializable. 
+All objects used on a workflow must implement Serializable. 
 We will use two models, an entity Pony with an id and a name and an object message with is content.
 
 Pony.java
@@ -165,9 +165,9 @@ public interface PonyRepository extends JpaRepository<Pony, Long> { }
 
 == Services
 
-We will need three method on PonyService : 
+We will need three methods on PonyService : 
 
-* One to getting a pony
+* One to get a pony
 * One to make the pony say "Eeyup"
 * One to make the pony say "Hello {{ponyName}}"
 
@@ -200,12 +200,12 @@ public class PonyService {
 Now we will build the workflow. 
 It will be pretty simple we will have :
 
-* a *StartEvent* as entry point of the workflow
-* a *ServiceTask* for getting the pony by calling PonyService#getOne
+* a *StartEvent* as an entry point of the workflow
+* a *ServiceTask* to get the pony by calling PonyService#getOne
 * an *ExclusiveGateway* which will lead to : 
 ** if the pony is Big McIntosh a *ServiceTask* which will call PonyService#sayEeyup
 ** or else a *ServiceTask* which will call PonyService#sayHello
-* an *EndEvent* to terminate the workflow
+* an *EndEvent* to end the workflow
 
 === StartEvent
 
@@ -213,13 +213,13 @@ The StartEvent also called "None Start Event" is a default start event. It will 
 
 === ServiceTask
 
-ServiceTask have three way to call a java :
+ServiceTask has a three-way to call a java :
 
 * Java class where one JavaDelegate = 1 function
 * Expression where we can call beans
-* Delegate expression when we need to do for exemple field injection
+* Delegate expression when we need to do for example field injection
 
-In our case we will use expression. 
+In our case, we will use Expression. 
 With Expression we will be able to call a bean method with ${myBean.method(variable)}
 
 We will use resultVariableName to store the return of the method to a workflow variable.
@@ -228,12 +228,12 @@ We will use resultVariableName to store the return of the method to a workflow v
 
 An ExclusiveGateway will work like a switch with break on each case. 
 Sequence flow condition will be evaluates one by one and the first one with an evaluation to true will be used. 
-If no condition is resolved as true, it will folow the default flow (which must have no conditition).
+If no condition is resolved as true, it will follow the default flow (which must have no condition).
 
 === EndEvent
 
 An EndEvent (also called None End Event) will terminate the workflow as success. 
-The execution of the workflow will be stoped.
+The execution of the workflow will be stopped.
 
 === BPMN file
 
@@ -261,14 +261,14 @@ The .bpmn open on text editor will look like :
 </definitions>
 {{< / highlight >}}
 
-All bpmn files on src/main/resources/processes are automaticaly deployed on server startup.
+All bpmn files on src/main/resources/processes are automatically deployed on server startup.
 
 == Rest
 
 We now need rest endpoints for start the process. 
 We need to create the map of variables which will be used by the process.
 We will start the process by using the flowable runtimeService.
-And at the end we will use the historyService to access to the ended process variables.
+And at the end, we will use the historyService to access to the ended process variables.
 
 {{< highlight java "linenos=table" >}}
 @RestController
