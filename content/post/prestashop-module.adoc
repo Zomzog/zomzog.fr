@@ -5,37 +5,37 @@ draft: false
 tags: ["PHP", "Prestashop"]
 ---
 
-I've installed a Prestashop store because... it's free and open source. 
+I've installed a Prestashop store because... It's free and open source. 
 I need some modules like EU cookie banner and I don't want to pay 30+€ just for that.
 
-I look at the community solution but I don't found a solution that transcended me...
+I looked at the community solution but I didn't find a solution that transcended me...
 And in fact, it's a good "hello world" example for me to learn how to create modules for Prestashop.
 
 <!--more-->
 The full implementation of the module can be found in 
-https://github.com/Zomzog/z_cookiesalert[this github project].
+https://github.com/Zomzog/z_cookiesalert[this GitHub project].
 
 == Environment
 
-For this tutorial I use a fresh installed Prestashop 1.7.2.1 and PHP 7.1.1.
+For this tutorial, I use a fresh installed Prestashop 1.7.2.1 and PHP 7.1.1.
 
-I use symbolic link to add my git source folder to prestashopFolder/modules/z_cookiesalert
+I use a symbolic link to add my git source folder to prestashopFolder/modules/z_cookiesalert
 
 == Initialization
 
-For Initialize the module files, you can folow the 
-http://developers.prestashop.com/module/05-CreatingAPrestaShop17Module/index.html[prestashop documentation].
+For initializing the module files, you can follow the 
+http://developers.prestashop.com/module/05-CreatingAPrestaShop17Module/index.html[Prestashop documentation].
 
-But it's full of naming convention and specific folder organisation.
+But it's full of naming convention and specific folder organization.
 Your module folder must be lowercase (z_cookiesalert). 
 The first php file name must be lowercase too (z_cookiesalert.php).
 The class name in this file must be camlCase (class Z_Cookiesalert extends Module).
 And don't forget everytime you add a folder, you must add an index.php file. 
 
-An easiest way I found on community forum is to start form an existing module (get an official one from prestashop's github) and modify the names.
+The easiest way I found on community forum is to start from an existing module (get an official one from Prestashop's GitHub) and modify the names.
 
-An other tips is to target 1.7+ compatibility and forget 1.6 and 1.5. 
-There are too much difference between well organized module for 1.7 and for preview versions.
+Another tip is to target 1.7+ compatibility and forget 1.6 and 1.5. 
+There are too many differences between well-organized modules for 1.7 and for preview versions.
 
 == The module
 
@@ -48,8 +48,8 @@ if (!defined('_PS_VERSION_')) {
 {{< / highlight >}}
 The sole purpose of this is to prevent malicious visitors to load this file directly.
 
-After that we need to create the main class with module descritpion.
-All information on the __construct method will be used by prestashop to generate the config.xml file.
+After that, we need to create the main class with the module description.
+All information on the __construct method will be used by Prestashop to generate the config.xml file.
 
 {{< highlight php "linenos=table" >}}
 class Z_Cookiesalert extends Module
@@ -79,9 +79,9 @@ class Z_Cookiesalert extends Module
 
 == The front office
 
-For displaing the ribbon message we will add a hook to the "displayFooter" hook.
+For displaying the ribbon message, we will add a hook to the "displayFooter" hook.
 And we will add all css and js required on the "header" hook.
-At installation we will also declare a default content message for the ribbon.
+At installation, we will also declare a default content message for the ribbon.
 
 {{< highlight php "linenos=table" >}}
 public function install()
@@ -93,10 +93,10 @@ public function install()
 }
 {{< / highlight >}}
 
-For getting the hooked content, prestashop will look at the method named hookNameOfTheHook.
-In our case it will be hookDisplayFooter and hookDisplayHeader.
+To get the hooked content, Prestashop will look at the method named hookNameOfTheHook.
+In our case, it will be hookDisplayFooter and hookDisplayHeader.
 
-We will register the module's stylesheet and the module's javascript file on the header with :
+We will register the module's stylesheet and the module's javascript files on the header with :
 {{< highlight php "linenos=table" >}}
 public function hookDisplayHeader()
 {
@@ -105,17 +105,15 @@ public function hookDisplayHeader()
 }
 {{< / highlight >}}
 
-For the footer, if the cookie usage have not been accepted yet ( check on the cookie =D ),
-we will add two parameter to smarty and display the cookiealert template.
+For the footer, if the cookie usage has not been accepted yet ( check on the cookie =D ), we will add two parameters to smarty and display the cookiealert template.
 
 == The back office
 
 The content of the ribbon must be customizable by the end user. 
-For this we must declare a new displayConfigForm method.
-For having an uniform render, 
-Prestashop advice to use HelperForm. 
+For this, we must declare a new displayConfigForm method.
+For having a uniform render, Prestashop advice to use HelperForm. 
 
-For this we will create a $fields_form with all required fields and use the helper to configure the render.
+For this, we will create a $fields_form with all required fields and use the helper to configure the render.
 
 {{< highlight php "linenos=table" >}}
 public function displayConfigForm()
@@ -183,7 +181,7 @@ public function displayConfigForm()
 {{< / highlight >}}
 
 == The ajax call
-When the user close the ribbon we want to create an ajax call to update the cookie on the server side.
+When the user closes the ribbon, we want to create an ajax call to update the cookie on the server side.
 For this, we must create a front controller.
 We will add a cookies.php file on z_cookiealert/controllers/front/.
 This file will declare a ModuleFrontController.
@@ -215,7 +213,7 @@ class Z_CookiesalertCookiesModuleFrontController extends ModuleFrontController {
 
 For calling the controller, we must resolve the url to the controller.
 The easiest way to do that is to use _url_ method on the template.
-For this we will add a data-url attribute to cookie_alert div.
+For this, we will add a data-url attribute to cookie_alert div.
 {{< highlight html "linenos=table" >}}
 <div id="cookies_alert" data-url="{url entity='module' name='z_cookiesalert' controller='Cookies' params = [action => 'action_name']}"
 {{< / highlight >}}
