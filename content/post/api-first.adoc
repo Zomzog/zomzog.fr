@@ -1,0 +1,25 @@
+---
+title: "API-First"
+date: 2019-03-05T21:24:11+01:00
+draft: true 
+tags: ["Java", "OpenAPI", "OpenAPI-Generator", "SpringBoot"]
+---
+
+This presentation has been created to introduce my teamates to OpenAPI-Generator.
+<!--more-->
+
+== Slides 
+https://zomzog.fr/api-first[Full width slides]
+++++
+<div>
+    <iframe id="apifirstSlides"
+            title="Api-first Slides"
+            width="672px" height="490px" 
+            src="https://zomzog.fr/api-first/">
+    </iframe>
+</div>
+++++
+== Sources
+
+Slides and examples can be found in 
+https://github.com/Zomzog/api-first[this github project].
