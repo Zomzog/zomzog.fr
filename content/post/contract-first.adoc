@@ -1,0 +1,25 @@
+---
+title: "Contract-First"
+date: 2019-12-11T21:24:11+01:00
+draft: false 
+tags: ["Java", "OpenAPI", "OpenAPI-Generator", "SpringBoot"]
+---
+
+An updated version of api-first presentation my teamates to OpenAPI-Generator.
+<!--more-->
+
+== Slides 
+https://zomzog.fr/api-first[Full width slides]
+++++
+<div>
+    <iframe id="contractfirstSlides"
+            title="Contract-first Slides"
+            width="672px" height="490px" 
+            src="https://zomzog.fr/contract-first/">
+    </iframe>
+</div>
+++++
+== Sources
+
+Slides and examples can be found in 
+https://github.com/Zomzog/contract-first[this github project].

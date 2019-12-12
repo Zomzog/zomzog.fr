@@ -1,0 +1,11 @@
+---
+title: "Gitflow + Maven = JgitVer"
+date: 2019-12-12T23:g:11+01:00
+draft: true 
+tags: ["Gitflow", "Maven", "JgitVer"]
+---
+
+Gitflow is a branching model for Git where the develop branch contains staging modification and master branch contains released commits.
+
+In this article, I will present you how we simplified maven version management to avoid merge conflict and ease our release process.
+<!--more-->
