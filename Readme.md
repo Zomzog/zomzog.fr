@@ -20,5 +20,5 @@ In other words:
 
 <pre><code>git clone https://github.com/Zomzog/zomzog.fr.git
 cd zomzog.fr
-hugo server -t <em>zomzog.fr-theme</em> -D
+hugo server -t zomzog.fr-theme -D
 </code></pre>
