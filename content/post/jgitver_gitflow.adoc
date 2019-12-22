@@ -1,7 +1,7 @@
 ---
 title: "Gitflow + Maven = JgitVer"
 date: 2019-12-12T21:24:11+01:00
-draft: true 
+draft: false
 tags: ["Gitflow", "Maven", "JgitVer"]
 ---
 :imagesdir: /images/jgitver_gitflow
