@@ -12,6 +12,10 @@ This is sources for [zomzog.fr](https://zomzog.fr/).
 
 # Using
 
+## With docker
+docker run --rm -it   -v $(pwd):/src   -p 1313:1313   klakegg/hugo:0.61.0-asciidoctor   server -D
+
+## With install
 1. First, [install Hugo](https://gohugo.io/overview/installing/);
 2. Then, clone this repository;
 3. Run Hugo and select the theme of your choosing.
