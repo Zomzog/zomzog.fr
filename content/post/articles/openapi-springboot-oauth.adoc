@@ -1,0 +1,128 @@
+---
+title: "OpenApi generator client auth token management"
+date: 2020-02-05T21:24:11+01:00
+draft: true
+tags: ["Gitflow", "Maven", "JgitVer"]
+---
+:imagesdir: /images/jgitver_gitflow
+
+Gitflow is a branching model for Git where the develop branch contains staging modification and master branch contains released commits.
+
+In this article, I will present you how we simplified maven version management to avoid merge conflict and ease our release process.
+<!--more-->
+
+== Gitflow
+
+In this post I will talk about the default process (feature -> develop -> release -> master) but the same thing can be done for hotfix process.
+
+Here an example of a workflow :
+
+image::gitflow.png[gitflow]
+
+The master branch contain 2 released version. 
+Two feature start in the same time.
+When the first feature is finished a release branch is created but the second feature is merge before the end of the release.
+
+
+== The issue
+
+With a classic maven version management we will have something like that :
+
+image::maven-version.png[]
+
+There is three issues with this solution :
+
+- How do we know it will be a minor or a major version ? Maybe the next one prepared must be 2.0.0-SNAPSHOT ?
+- Where does I set 1.1.0 and 1.2.0-SNAPSHOT ?
+
+For the last issue we tried to use the maven release plugin and the result was :
+
+image::maven-release.png[]
+
+We can see that the version merged into develop is not the same as the version merged into master.
+
+This create another issue where 1.1.0 is build twice, one time on release for validation and one time on master for tagged version.
+
+The lase issue with this process is that if a module is added on develop during the release process,
+merging the release branch will break the develop build because the new version is not on it.
+
+== Version from git
+
+A common solution of the version management with gitflow is to deduct it from git tags.
+With this approch we do not care of version for every branches except master. 
+
+If we go back to the first example : 
+
+image::gitflow.png[gitflow]
+
+Version 1.0.0 and 1.1.0 will be github tags.
+
+For all other commit we don't care of the version, they can all be 0.0.0 or a more useful one like commitId.branch
+
+== Jgitver to the rescue !
+
+Jgitver provide a way to calculate the semver version from git tags.
+
+It can be integreted into maven by a maven-extension plugin.
+
+For enabling the extension create
+{{< accordion title=".mvn/extensions.xml" >}}
+	{{< highlight xml "linenos=table" >}}
+<extensions xmlns="http://maven.apache.org/EXTENSIONS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://maven.apache.org/EXTENSIONS/1.0.0 http://maven.apache.org/xsd/core-extensions-1.0.0.xsd">
+    <extension>
+        <groupId>fr.brouillard.oss</groupId>
+        <artifactId>jgitver-maven-plugin</artifactId>
+        <version>1.5.1</version>
+    </extension>
+</extensions>
+	{{< / highlight >}}
+{{< / accordion >}}
+
+The plugin configuration will be done in
+
+{{< accordion title=".mvn/jgitver.config.xml" >}}
+	{{< highlight xml "linenos=table" >}}
+<configuration xmlns="http://jgitver.github.io/maven/configuration/1.1.0"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://jgitver.github.io/maven/configuration/1.1.0 https://jgitver.github.io/maven/configuration/jgitver-configuration-v1_1_0.xsd">
+    <strategy>CONFIGURABLE</strategy>
+    <useDirty>true</useDirty>
+    <useGitCommitId>true</useGitCommitId>
+    <useSnapshot>true</useSnapshot>
+</configuration>
+	{{< / highlight >}}
+{{< / accordion >}}
+
+This configuration will create tags like `0.0.0-shortCommitId-dirty-SNAPSHOT`
+
+useSnapshot will force `-SNAPSHOT` for non tagged commit. 
+This maven convention must be keep for publishing artifacts to a SNAPSHOT repository. 
+
+useDirty will add `-dirty` to the version if it has been created with uncommited change.
+This will avoid different version with the same commitId
+
+== New release process
+
+Now we don't need anymore update on pom version.
+The releasing process is now to merge the release commit to master and add an annotated tag to it like `1.0.0`.
+
+The fore issue with default maven version are solved
+- Choosing if the next version is a major, minor or even a bugfix is at the end of the release process when we know what is released. 
+- Release version is only build on tagged commit on master branch
+- No more pom conflict for version update
+
+== Bonus
+
+You can use the exactly same workflow with a gradle project with gradle-jgitver-plugin
+
+== IntelliJ and subModule
+
+Intellij IDEA use a custom version of maven that create issue with jgitVer. 
+In a futur version of intelliJ it will be https://youtrack.jetbrains.com/issue/IDEA-224621[disabled by default], 
+but for the moment you must add `-Djgitver.skip=true` in File > Settings > Build, Execution, Deployment > Build Tools > Maven > Importing >  VM options for importing
+
+== Links 
+
+https://github.com/zomzog/jgitver-demo[Demo project]
+https://github.com/jgitver/[Jgitver]
