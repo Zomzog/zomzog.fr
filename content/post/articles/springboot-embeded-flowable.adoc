@@ -21,7 +21,7 @@ We will need :
 * for flowable : flowable-spring-boot-starter-basic
 * for database : h2
 
-{{< accordion title="Maven configuration" >}}
+{{< accordion title="Maven configuration" id="mvn" >}}
 	{{< highlight xml "linenos=table" >}}
 		<parent>
 			<groupId>org.springframework.boot</groupId>
