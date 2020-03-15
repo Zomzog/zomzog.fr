@@ -1,7 +1,7 @@
 ---
 title: "OpenApi generator client auth token management"
-date: 2020-02-05T21:24:11+01:00
-draft: true
+date: 2020-03-14T21:24:11+01:00
+draft: false
 tags: ["OpenAPI Generator", "SpringBoot", "Oauth2"]
 ---
 
@@ -239,7 +239,7 @@ public void config(){
 
 With this configuration, each calls with generated clients will contains the token.
 
-If multiple clients need to be generated the ApiClient can be genereted separatly and mutualized.
+If multiple clients need to be generated the ApiClient can be generated separately and mutualized.
 
 Source code example can be found on https://github.com/Zomzog/openapi-spring-client-token[Github]
 
