@@ -66,7 +66,7 @@ Jgitver provide a way to calculate the semver version from git tags.
 It can be integreted into maven by a maven-extension plugin.
 
 For enabling the extension create
-{{< accordion title=".mvn/extensions.xml" >}}
+{{< accordion title=".mvn/extensions.xml" id="mvnExtensions" >}}
 	{{< highlight xml "linenos=table" >}}
 <extensions xmlns="http://maven.apache.org/EXTENSIONS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://maven.apache.org/EXTENSIONS/1.0.0 http://maven.apache.org/xsd/core-extensions-1.0.0.xsd">
@@ -81,7 +81,7 @@ For enabling the extension create
 
 The plugin configuration will be done in
 
-{{< accordion title=".mvn/jgitver.config.xml" >}}
+{{< accordion title=".mvn/jgitver.config.xml" id="mvnJgitver" >}}
 	{{< highlight xml "linenos=table" >}}
 <configuration xmlns="http://jgitver.github.io/maven/configuration/1.1.0"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
