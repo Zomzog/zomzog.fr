@@ -1,0 +1,37 @@
+---
+title: "Ergodox accent without international deadkey"
+date: 2020-03-18T18:10:00+01:00
+draft: false
+tags: ["ergodox", "ubuntu", "accent"]
+---
+:imagesdir: /images/ergodox-accent
+I try to configure an ergodox-ez keyboard with developper layout but also to be able to type french text.
+So I don't want to set US-International layout because I don't want dead key on all `'` and ``` when I develop.
+<!--more-->
+
+== Gnome Tweaks
+
+All can be done by command line but I prefer using gnome tweaks GUI.
+It can be installed with ubuntu software or with `sudo apt install gnome-tweaks`
+
+== Compose key
+
+On keyboard & mouse part setup a compose key.
+
+image:tweaks.png[tewaks]
+
+Enable the compose key and choose your preferred key.
+In y case `Right Ctrl`
+
+image:compose-key.png[compose-key]
+
+== Erogdox config
+
+With Oryx you can add modifiers on a key.
+You can do it for most useful french accents like ``` or `'`
+
+image:add-modifiers.png[add-modifiers]
+
+== Enjoy
+
+Now you can type your new dead key and the required letter and enjoy typing accents.
