@@ -5,6 +5,10 @@ draft: false
 tags: ["ergodox", "ubuntu", "accent"]
 ---
 :imagesdir: /images/ergodox-accent
+
+[.text-center]
+image:ergodox.png[icon,500]
+
 I try to configure an ergodox-ez keyboard with developper layout but also to be able to type french text.
 So I don't want to set US-International layout because I don't want dead key on all `'` and ``` when I develop.
 <!--more-->
