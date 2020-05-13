@@ -1,0 +1,25 @@
+---
+title: "CFP - Unit toolkit"
+date: 2020-04-28T21:24:11+01:00
+draft: false 
+tags: ["DevFest", "Java", "Kotlin", "Junit", "SpringBoot"]
+---
+
+== Titre:
+- Passez vos tests du graffiti au street art
+- Un bon artiste test de bons outils
+
+== Abstact:
+Une bonne couverture de test c'est bien, des tests qui expliquent le fonctionnel simplement c'est encore mieux.
+
+Présenter le resultat d'une migration de tests junit4 a junit5 avec l'utilisation des nouvelles fonctionnalités et l'ajout de librairies pour les rendre plus parlant.
+
+== Reference:
+Cette présentation sera une adaptation de celle déjà faite en interne avec ces slides : https://zomzog.fr/unitEvolution/#/title
+
+== Technos:
+Java/Kotlin
+Junit4/5 
+assertJ/K 
+mockito/mockk
+Springboot? TestContainer?
