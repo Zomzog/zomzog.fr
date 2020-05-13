@@ -7,10 +7,10 @@ tags: ["DevFest", "Java", "Kotlin", "Junit", "SpringBoot"]
 
 == Titre:
 - Passez vos tests du graffiti au street art
-- Un bon artiste test de bons outils
+- Un bon artiste teste de bons outils
 
 == Abstact:
-Une bonne couverture de test c'est bien, des tests qui expliquent le fonctionnel simplement c'est encore mieux.
+Une bonne couverture de tests c'est bien, des tests qui expliquent le fonctionnel simplement c'est encore mieux.
 
 Présenter le resultat d'une migration de tests junit4 a junit5 avec l'utilisation des nouvelles fonctionnalités et l'ajout de librairies pour les rendre plus parlant.
 
