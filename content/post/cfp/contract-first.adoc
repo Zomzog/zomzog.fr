@@ -11,7 +11,7 @@ tags: ["DevFest", "OpenAPI Generator", "SpringBoot"]
 == Abstact:
 L'API c'est l'UI du développeur backend.
 Trop souvent on se contente d'une documentation générée à la fin.
-Pourquoi ne pas la placer au premier plan?
+Pourquoi ne pas la placer au premier plan ?
 
 Regroupe ton Crew,
 prépare ton contrat d'API et génère ton code pour un tag sans bavure.
