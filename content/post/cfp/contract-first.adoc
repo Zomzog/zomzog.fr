@@ -9,7 +9,7 @@ tags: ["DevFest", "OpenAPI Generator", "SpringBoot"]
 - Prépare ton pochoir pour des API qui RESTent
 
 == Abstact:
-L'API c'est l'UI du developpeur backend.
+L'API c'est l'UI du développeur backend.
 Trop souvent on se contente d'une documentation génrée a la fin.
 Pourquoi ne pas la placer au premier plan?
 
