@@ -14,7 +14,7 @@ Trop souvent on se contente d'une documentation génrée a la fin.
 Pourquoi ne pas la placer au premier plan?
 
 Regroupe ton Crew,
-prepare ton contrat d'API et genère ton code pour un tag sans bavures.
+prépare ton contrat d'API et génère ton code pour un tag sans bavure.
 
 
 == Reference:
