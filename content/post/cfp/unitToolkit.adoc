@@ -12,7 +12,7 @@ tags: ["DevFest", "Java", "Kotlin", "Junit", "SpringBoot"]
 == Abstact:
 Une bonne couverture de tests c'est bien, des tests qui expliquent le fonctionnel simplement c'est encore mieux.
 
-Présenter le resultat d'une migration de tests junit4 a junit5 avec l'utilisation des nouvelles fonctionnalités et l'ajout de librairies pour les rendre plus parlant.
+Présenter le résultat d'une migration de tests junit4 à junit5 avec l'utilisation des nouvelles fonctionnalités et l'ajout de librairies pour les rendre plus parlants.
 
 == Reference:
 Cette présentation sera une adaptation de celle déjà faite en interne avec ces slides : https://zomzog.fr/unitEvolution/#/title
