@@ -10,7 +10,7 @@ tags: ["DevFest", "OpenAPI Generator", "SpringBoot"]
 
 == Abstact:
 L'API c'est l'UI du développeur backend.
-Trop souvent on se contente d'une documentation génrée a la fin.
+Trop souvent on se contente d'une documentation générée à la fin.
 Pourquoi ne pas la placer au premier plan?
 
 Regroupe ton Crew,
