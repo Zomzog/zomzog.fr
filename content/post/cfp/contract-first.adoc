@@ -6,7 +6,7 @@ tags: ["DevFest", "OpenAPI Generator", "SpringBoot"]
 ---
 
 == Titre:
-- Prepare ton pochoir pour des API qui RESTent
+- Prépare ton pochoir pour des API qui RESTent
 
 == Abstact:
 L'API c'est l'UI du developpeur backend.
