@@ -43,7 +43,7 @@ We can see that the version merged into develop is not the same as the version m
 
 This create another issue where 1.1.0 is build twice, one time on release for validation and one time on master for tagged version.
 
-The lase issue with this process is that if a module is added on develop during the release process,
+The last issue with this process is that if a module is added on develop during the release process,
 merging the release branch will break the develop build because the new version is not on it.
 
 == Version from git
