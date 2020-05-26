@@ -119,7 +119,7 @@ You can use the exactly same workflow with a gradle project with gradle-jgitver-
 == IntelliJ and subModule
 
 Intellij IDEA use a custom version of maven that create issue with jgitVer. 
-In a futur version of intelliJ it will be https://youtrack.jetbrains.com/issue/IDEA-224621[disabled by default], 
+In a future version of intelliJ it will be https://youtrack.jetbrains.com/issue/IDEA-224621[disabled by default], 
 but for the moment you must add `-Djgitver.skip=true` in File > Settings > Build, Execution, Deployment > Build Tools > Maven > Importing >  VM options for importing
 
 == Links 
