@@ -1,0 +1,27 @@
+---
+title: "CFP - Contract first"
+date: 2020-04-28T21:24:11+01:00
+draft: false 
+tags: ["DevFest", "OpenAPI Generator", "SpringBoot"]
+---
+
+== Titre:
+- Prépare ton pochoir pour des API qui RESTent
+
+== Abstact:
+L'API c'est l'UI du développeur backend.
+Trop souvent on se contente d'une documentation générée à la fin.
+Pourquoi ne pas la placer au premier plan ?
+
+Regroupe ton Crew,
+prépare ton contrat d'API et génère ton code pour un tag sans bavure.
+
+
+== Reference:
+Cette présentation sera une adaptation de celle déjà faite en interne avec ces slides : https://zomzog.fr/contract-first
+
+== Technos:
+Java/Kotlin
+OpenAPI Generator
+OAS3/OpenAPI-Specification 3
+SpringBoot
