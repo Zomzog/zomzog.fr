@@ -1,0 +1,160 @@
+---
+title: "OpenApi generator inheritance"
+date: 2020-05-31T19:24:11+01:00
+draft: false
+tags: ["OpenAPI Generator", "SpringBoot", "OAS3"]
+---
+
+:imagesdir: /images/openapi-inheritance
+
+[.text-center]
+image:openapi-generator-logo.svg[icon,200]
+
+We have to create a new API with inheritance in the model.
+To continue with the contract first way,
+we will see how to write it in OAS3.
+<!--more-->
+
+== The requirement
+
+We will create an API that can (surprise) manage ponies.
+We will work with two kinds of ponies, pegasi and unicorn.
+
+[.text-center]
+image:target-uml.png[]
+
+== The solution
+
+We must use allOf for inheritance:
+
+{{< accordion title="api.yml" id="api" >}}
+{{< highlight yaml "linenos=table" >}}
+---
+components:
+  schemas:
+    Pony:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+    Pegasi:
+      allOf:
+        - $ref: "#/components/schemas/Pony"
+        - type: "object"
+          properties:
+            wingsColors:
+              type: "string"
+              default: "RED"
+    Unicorn:
+      allOf:
+        - $ref: "#/components/schemas/Pony"
+        - type: "object"
+          properties:
+            cornSize:
+              type: "integer"
+              default: 10
+---
+{{< / highlight >}}
+{{< / accordion >}}
+
+
+With this, we will have Pegasi and Unicorn that extend Pony.
+But if we generate the controller,
+it will not work well because it can't say when to build a Pegasi or a Unicorn.
+
+To specify this we need to use a discriminator.
+
+
+{{< accordion title="api.yml" id="api-discriminator" >}}
+{{< highlight yaml "linenos=table" >}}
+---
+components:
+  schemas:
+    Pony:
+      discriminator:
+        propertyName: ponyType
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        ponyType:
+          type: string
+
+    Pegasi:
+      allOf:
+        - $ref: "#/components/schemas/Pony"
+        - type: "object"
+          properties:
+            wingsColors:
+              type: "string"
+              default: "RED"
+    Unicorn:
+      allOf:
+        - $ref: "#/components/schemas/Pony"
+        - type: "object"
+          properties:
+            cornSize:
+              type: "integer"
+              default: 10
+---
+{{< / highlight >}}
+{{< / accordion >}}
+
+
+The discriminator is added to the model because it will be in.
+It must not be treated as a hidden property because it will mess clients.
+
+If you want to fix it,
+it can be specified with mapping property.
+
+
+{{< accordion title="api.yml" id="api-discriminator-mapping" >}}
+{{< highlight yaml "linenos=table" >}}
+---
+components:
+  schemas:
+    Pony:
+      discriminator:
+        propertyName: ponyType
+        mapping:
+          pegasi: "#/components/schemas/Pegasi"
+          unicorn: "#/components/schemas/Unicorn"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        ponyType:
+          type: string
+
+    Pegasi:
+      allOf:
+        - $ref: "#/components/schemas/Pony"
+        - type: "object"
+          properties:
+            wingsColors:
+              type: "string"
+              default: "RED"
+    Unicorn:
+      allOf:
+        - $ref: "#/components/schemas/Pony"
+        - type: "object"
+          properties:
+            cornSize:
+              type: "integer"
+              default: 10
+---
+{{< / highlight >}}
+{{< / accordion >}}
+
+== OneOf?
+
+Our first try was with oneOf,
+but it's not for inheritance it's a composition,
+it's create an object that can be both a Pegasi and a Unicorn,
+but in a way that says Pegasi and Unicorn are two disjoint objects with nothing common.
+
+== Links
+
+https://github.com/Zomzog/openapi-inheritance[Demo project]
+
+https://github.com/OpenAPITools/openapi-generator[OpenAPI Generator]
