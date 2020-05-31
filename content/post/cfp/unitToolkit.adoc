@@ -1,7 +1,7 @@
 ---
 title: "CFP - Unit toolkit"
 date: 2020-04-28T21:24:11+01:00
-draft: true  // not a real article must be elsewhere in the blog
+draft: true
 tags: ["DevFest", "Java", "Kotlin", "Junit", "SpringBoot"]
 ---
 
