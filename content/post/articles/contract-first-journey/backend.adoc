@@ -1,2 +1,69 @@
 
+== The backend developer
+
+Has a backend developer, 
+I have a SpringBoot application and 
+I want to scaffold the API from the contract,
+but I also want to be able to update this contract and redo the scaffolding without losing everything.
+
+I will use the `openapi-generator-maven-plugin` for this.
+As `inputSpec` I will provide a link to my contract.
+For the `generatorName` I want the spring generator.
+I can also tweak API and model package, 
+but I don't need supporting files (pom.xml, SpringBootApplication because I will always keep mines)
+
+I will also use two config options, `interfaceOnly` and `delegatePattern` because they will allow me to plug my implementation into the generated code.
+
+The complete plugin config:
+
+{{< accordion title="pom.xml" id="codeGeneration">}}
+{{< highlight xml "linenos=table" >}}
+<plugin>
+    <groupId>org.openapitools</groupId>
+    <artifactId>openapi-generator-maven-plugin</artifactId>
+    <version>5.0.0</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+            <configuration>
+                <inputSpec>src/main/resources/contract.yaml</inputSpec>
+                <generatorName>spring</generatorName>
+                <apiPackage>bzh.zomzog.demo.contractfirst.api</apiPackage>
+                <modelPackage>bzh.zomzog.demo.contractfirst.model</modelPackage>
+                <generateSupportingFiles>false</generateSupportingFiles>
+                <configOptions>
+                    <interfaceOnly>true</interfaceOnly>
+                    <delegatePattern>true</delegatePattern>
+                </configOptions>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+{{< / highlight >}}
+{{< / accordion >}}
+
 Now I have my model and my PoniesApi generated.
+In `PonyApi.java` all the contract is handled by `_method` like `_getOne(...)` and they directly call the sub method `method` like `getOne`.
+This allows to implements the controller behavior without having to copy annotations.
+
+So I just need to create a `PoniesController` that implements `PonyApi`,
+mark it as `@RestController` for SpringBoot, and implements all the logical.
+
+
+{{< accordion title="pom.xml" id="codeGeneration">}}
+{{< highlight java "linenos=table" >}}
+@RestController
+public class PoniesController implements PoniesApi {
+
+    @Override
+    public ResponseEntity<Pony> getOne(Integer ponyId) {
+        var pony = new Pony().id(ponyId);
+        return ResponseEntity.ok(pony);
+    }
+}
+{{< / highlight >}}
+{{< / accordion >}}
+
+link:{{< ref "content/post/articles/contract-first-journey/contract-first-journey.adoc#chooseYourTeam" >}}[Back to the list]

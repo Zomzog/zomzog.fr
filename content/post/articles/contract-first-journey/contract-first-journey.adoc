@@ -1,5 +1,5 @@
 ---
-title: "Contract-first journey"
+title: "Contract-first Rest API journey - Draft"
 date: 2021-02-15T18:10:00+01:00
 draft: false
 tags: ["Contract-First", "OpenAPI Generator", "SpringBoot"]
@@ -7,15 +7,20 @@ tags: ["Contract-First", "OpenAPI Generator", "SpringBoot"]
 :imagesdir: /images/contract-first-journey
 
 [.text-center]
-image:header.png[icon,500]
+image:header.png[icon,300]
 
-Happy me! I have my API contract created with my magic designer tool... 
-And now? Is it useful for something else than documentation?
+Lucky me! I have my API contract created with my magic designer tool!
+And now? Is it useful for something else that being yaml/json file?
 <!--more-->
 
-== My contract
+== Why ?
 
-In this journey I will use my classical Pony management API.
+I will use one contract for all example,
+The idea is to see that once the contract created everyone can work in parallel and consistency with the contract can easily be ensured.
+
+== The demo contract
+
+In this journey, I will use my classical Pony management API.
 
 {{< accordion title="api.yml" id="api" >}}
 {{< highlight yaml "linenos=table" >}}
@@ -142,8 +147,10 @@ tags:
 {{< / highlight >}}
 {{< / accordion >}}
 
+[[chooseYourTeam]]
 == Choose your team
 
 link:{{< ref "content/post/articles/contract-first-journey/backend.adoc" >}}[Team backend]
 
 link:{{< ref "content/post/articles/contract-first-journey/doc.adoc" >}}[Team documentation]
+
