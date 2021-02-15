@@ -8,7 +8,12 @@ This is sources for [zomzog.fr](https://zomzog.fr/).
 # Requirement
 
 ## With docker
+
+### Bash
 docker run --rm -it   -v $(pwd):/src   -p 1313:1313   klakegg/hugo:0.64.0-asciidoctor   server -D
+
+### Fish shell
+docker run --rm -it   -v $PWD:/src   -p 1313:1313   klakegg/hugo:0.64.0-asciidoctor   server -D
 
 ## With install
 1. snap install hugo --channel=extended

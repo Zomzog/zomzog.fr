@@ -1,0 +1,8 @@
+== The documentation team
+
+=== The contract can be directly imported in swagger-ui
+
+For example :
+docker run -p 80:8080 -e SWAGGER_JSON=/api.yaml -v {{< ref "content/post/articles/contract-first-journey/backend.adoc" >}}:/api.yaml swaggerapi/swagger-ui
+
+npx openapi-generator generate -i .\api.yml -g asciidoc -o ./asciidoc
