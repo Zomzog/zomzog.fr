@@ -150,7 +150,7 @@ tags:
 [[chooseYourTeam]]
 == Choose your team
 
-link:{{< ref "content/post/articles/contract-first-journey/backend.adoc" >}}[Team backend]
+link:{{< ref "/content/post/articles/contract-first-journey/backend.adoc" >}}[Team backend]
 
-link:{{< ref "content/post/articles/contract-first-journey/doc.adoc" >}}[Team documentation]
+link:{{< ref "/content/post/articles/contract-first-journey/doc.adoc" >}}[Team documentation]
 

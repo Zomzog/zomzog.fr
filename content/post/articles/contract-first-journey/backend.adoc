@@ -1,4 +1,3 @@
-
 == The backend developer
 
 Has a backend developer, 
@@ -66,4 +65,4 @@ public class PoniesController implements PoniesApi {
 {{< / highlight >}}
 {{< / accordion >}}
 
-link:{{< ref "content/post/articles/contract-first-journey/contract-first-journey.adoc#chooseYourTeam" >}}[Back to the list]
+link:{{< ref "/content/post/articles/contract-first-journey/contract-first-journey.adoc#chooseYourTeam" >}}[Back to the list]
