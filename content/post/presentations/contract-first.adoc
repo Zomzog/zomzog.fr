@@ -9,7 +9,7 @@ An updated version of api-first presentation my teamates to OpenAPI-Generator.
 <!--more-->
 
 == Slides 
-https://zomzog.fr/api-first[Full width slides]
+https://zomzog.fr/contract-first[Full width slides]
 ++++
 <div>
     <iframe id="contractfirstSlides"
