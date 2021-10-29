@@ -1,3 +1,7 @@
+---
+draft: true
+---
+
 == The documentation team
 
 === The contract can be directly imported in swagger-ui
