@@ -1,3 +1,6 @@
 [submodule "themes/zomzog.fr-theme"]
 	path = themes/zomzog.fr-theme
 	url = https://github.com/Zomzog/zomzog.fr-theme.git
+[submodule "themes/hugo-theme-bootstrap"]
+	path = themes/hugo-theme-bootstrap
+	url = https://github.com/zomzog/hugo-theme-bootstrap
