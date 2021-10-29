@@ -1,0 +1,156 @@
+---
+title: "Contract-first Rest API journey - Draft"
+date: 2021-02-15T18:10:00+01:00
+draft: true
+tags: ["Contract-First", "OpenAPI Generator", "SpringBoot"]
+---
+:imagesdir: /images/contract-first-journey
+
+[.text-center]
+image:header.png[icon,300]
+
+Lucky me! I have my API contract created with my magic designer tool!
+And now? Is it useful for something else that being yaml/json file?
+<!--more-->
+
+== Why ?
+
+I will use one contract for all example,
+The idea is to see that once the contract created everyone can work in parallel and consistency with the contract can easily be ensured.
+
+== The demo contract
+
+In this journey, I will use my classical Pony management API.
+
+{{< accordion title="api.yml" id="api" >}}
+{{< highlight yaml "linenos=table" >}}
+---
+openapi: 3.0.0
+info:
+  title: Ponies
+  version: '1.0'
+  contact:
+    name: Zomzog
+  description: Pony management API
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  '/ponies/{ponyId}':
+    parameters:
+      - schema:
+          type: integer
+        name: ponyId
+        in: path
+        required: true
+    get:
+      summary: Get Pony Info by Pony ID
+      responses:
+        '200':
+          description: Pony Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pony'
+              examples: {}
+        '404':
+          description: Pony Not Found
+      operationId: get-one
+      description: Retrieve the information of the Pony with the matching Pony ID.
+      tags:
+        - ponies
+    put:
+      summary: Update Pony Information
+      operationId: update-Ponys-PonyId
+      responses:
+        '200':
+          description: Pony Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pony'
+              examples: {}
+        '404':
+          description: Pony Not Found
+        '409':
+          description: Email Already Taken
+      description: Update the infromation of an existing Pony.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pony'
+            examples: {}
+        description: Update Pony properties.
+      tags:
+        - ponies
+  /ponies:
+    post:
+      summary: Create New Pony
+      operationId: post-Pony
+      responses:
+        '200':
+          description: Pony Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pony'
+              examples: {}
+        '400':
+          description: Missing Required Information
+        '409':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pony'
+            examples: {}
+        description: Post the necessary fields for the API to create a new Pony.
+      description: Create a new Pony.
+      tags:
+        - ponies
+    parameters: []
+components:
+  schemas:
+    Pony:
+      title: Pony
+      type: object
+      description: ''
+      x-examples: {}
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given Pony.
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/PonyType'
+        friends:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: ''
+      required:
+        - id
+        - name
+        - type
+    PonyType:
+      type: string
+      title: PonyType
+      enum:
+        - Earth
+        - Unicorns
+        - Pegasi
+tags:
+  - name: ponies
+---
+{{< / highlight >}}
+{{< / accordion >}}
+
+[[chooseYourTeam]]
+== Choose your team
+
+link:{{< ref "/content/post/articles/contract-first-journey/backend.adoc" >}}[Team backend]
+
+link:{{< ref "/content/post/articles/contract-first-journey/doc.adoc" >}}[Team documentation]
+
