@@ -10,10 +10,10 @@ This is sources for [zomzog.fr](https://zomzog.fr/).
 ## With docker
 
 ### Bash
-docker run --rm -it   -v $(pwd):/src   -p 1313:1313   klakegg/hugo:0.80.0-asciidoctor   server -D
+docker run --rm -it   -v $(pwd):/src   -p 1313:1313   klakegg/hugo:0.83.1-asciidoctor   server -D
 
 ### Fish shell
-docker run --rm -it   -v $PWD:/src   -p 1313:1313   klakegg/hugo:0.80.0-asciidoctor   server -D
+docker run --rm -it   -v $PWD:/src   -p 1313:1313   klakegg/hugo:0.83.1-asciidoctor   server -D
 
 ## With install
 1. snap install hugo --channel=extended
