@@ -3,7 +3,8 @@ name: GitHub Pages
 on:
   push:
     branches:
-      - moveToGithubAction  # Set a branch to deploy
+      - master 
+  pull_request:
 
 jobs:
   deploy:
@@ -36,7 +37,7 @@ jobs:
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/moveToGithubAction' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           external_repository: zomzog/zomzog.github.io
